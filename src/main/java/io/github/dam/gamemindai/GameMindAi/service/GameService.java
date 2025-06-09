@@ -28,10 +28,10 @@ public class GameService {
         return repository.findById(id);
     }
 
-    public Game update(Long id, Game gameUpdated) {
+    public Game update(Long id, Game game) {
         if(repository.existsById(id)) {
-            gameUpdated.setId(id);
-            return repository.save(gameUpdated);
+            game.setId(id);
+            return repository.save(game);
         }
         return null;
     }
