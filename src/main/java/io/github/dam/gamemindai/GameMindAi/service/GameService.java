@@ -24,16 +24,12 @@ public class GameService {
         return repository.findAll();
     }
 
-    public Optional<Game> listById(Long id) {
+    public Optional<Game> findById(Long id) {
         return repository.findById(id);
     }
 
-    public Game update(Long id, Game game) {
-        if(repository.existsById(id)) {
-            game.setId(id);
-            return repository.save(game);
-        }
-        return null;
+    public Game update(Game game) {
+        return repository.save(game);
     }
 
     public void deleteById(Long id) {

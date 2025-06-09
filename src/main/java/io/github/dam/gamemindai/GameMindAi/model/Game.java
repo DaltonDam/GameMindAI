@@ -1,8 +1,11 @@
 package io.github.dam.gamemindai.GameMindAi.model;
 
+import io.github.dam.gamemindai.GameMindAi.enums.GameGenre;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "game")
@@ -18,15 +21,15 @@ public class Game {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "genre")
     private GameGenre genre;
 
     @Column(name = "platform")
     private String platform;
+
+    @Column(name = "release")
+    private LocalDate release;
 
     public Long getId() {
         return id;
@@ -44,14 +47,6 @@ public class Game {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public GameGenre getGenre() {
         return genre;
     }
@@ -66,5 +61,13 @@ public class Game {
 
     public void setPlatform(String platform) {
         this.platform = platform;
+    }
+
+    public LocalDate getRelease() {
+        return release;
+    }
+
+    public void setRelease(LocalDate release) {
+        this.release = release;
     }
 }
