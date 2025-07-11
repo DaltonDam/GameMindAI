@@ -1,5 +1,6 @@
 package io.github.dam.gamemindai.GameMindAi.service;
 
+import io.github.dam.gamemindai.GameMindAi.model.Game;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class OpenAIService {
@@ -20,8 +22,18 @@ public class OpenAIService {
 
     private String apiKey = System.getenv("KEY");
 
-    public Mono<String> generateRecipe() {
-        String prompt = "Me indique jogos com base no gosto geral da comunidade gamer";
+    public Mono<String> generateRecipe(List<Game> gameList) {
+        String games = gameList.stream()
+                .map(game -> String.format(
+                        "Nome: %s, Gênero: %s, Plataforma: %s, Lançamento: %s",
+                        game.getName(),
+                        game.getGenre().name(),
+                        game.getPlatform(),
+                        game.getRelease()
+                ))
+                .collect(Collectors.joining("\n"));
+
+        String prompt = "Baseado no meu banco de dados, dê sugestões de jogos semelhantes a essa lista: ." + games;
 
         Map<String, Object> requestBody = Map.of(
                 "model", "gpt-4.1",
